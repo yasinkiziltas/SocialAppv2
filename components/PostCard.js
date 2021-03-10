@@ -15,9 +15,8 @@ import {
 } from '../styles/FeedStyles'
 
 import Ionicons from 'react-native-vector-icons/Ionicons'
-
 import { AuthContext } from '../navigation/AuthProvider'
-
+import moment from 'moment'
 
 
 export const PostCard = ({ item, onDelete }) => {
@@ -59,7 +58,8 @@ export const PostCard = ({ item, onDelete }) => {
                 <UserImg source={{ uri: item.userImg }} />
                 <UserInfoText>
                     <UserName>{item.userName}</UserName>
-                    <PostTime>{item.postTime.toString()}</PostTime>
+                    {/* <PostTime>{item.postTime.toString()}</PostTime> */}
+                    <PostTime>{moment(item.postTime.toDate()).fromNow()}</PostTime>
                 </UserInfoText>
             </UserInfo>
             <PostText>{item.post}</PostText>

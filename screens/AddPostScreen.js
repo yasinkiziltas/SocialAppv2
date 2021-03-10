@@ -87,6 +87,7 @@ export default function AddPostScreen() {
                     'Your post has been published Successfully!',
                 );
                 setPost(null);
+                this.props.navigation.navigate('HomeScreen')
             })
             .catch((error) => {
                 console.log('Something went wrong with added post to firestore.', error);
