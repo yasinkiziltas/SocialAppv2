@@ -7,6 +7,7 @@ import { PostCard } from '../components/PostCard'
 
 import firebase, { firestore } from 'firebase';
 
+//new branch deneme
 //
 // const Posts = [
 //     {
