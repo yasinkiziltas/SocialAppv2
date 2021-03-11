@@ -17,6 +17,7 @@ import {
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { AuthContext } from '../navigation/AuthProvider'
 import moment from 'moment'
+import ProgressiveImage from './ProgressiveImage'
 
 
 export const PostCard = ({ item, onDelete }) => {
@@ -63,8 +64,17 @@ export const PostCard = ({ item, onDelete }) => {
                 </UserInfoText>
             </UserInfo>
             <PostText>{item.post}</PostText>
-            {item.postImg != null ? <PostImg source={{ uri: item.postImg }} /> : <Divider />}
-            <Divider />
+            {/* {item.postImg != null ? <PostImg source={{ uri: item.postImg }} /> : <Divider />} */}
+            {item.postImg != null ? (
+                <ProgressiveImage
+                    defaultImageSource={require('../assets/default-img.jpg')}
+                    source={{ uri: item.postImg }}
+                    style={{ width: '100%', height: 250 }}
+                    resizeMode='cover'
+                />
+            ) : <Divider />}
+
+
 
             <InteractionWrapper>
 
