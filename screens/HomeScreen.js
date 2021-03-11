@@ -9,6 +9,7 @@ export default function HomeScreen() {
     const [posts, setPosts] = useState(null)
     const [loading, setLoading] = useState(null)
     const [deleted, setDeleted] = useState(false)
+    const [fetch, setFetch] = useState(false)
 
     const fetchPosts = async () => {
         try {
@@ -40,6 +41,7 @@ export default function HomeScreen() {
                 })
 
             setPosts(list)
+            setFetch(true)
 
             if (loading) {
                 setLoading(false)
@@ -53,8 +55,8 @@ export default function HomeScreen() {
 
     useEffect(() => {
         fetchPosts();
-    }, []);
-
+        setFetch(false)
+    }, [fetch]);
 
 
     useEffect(() => {
