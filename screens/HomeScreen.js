@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { FlatList, Alert } from 'react-native'
+import { FlatList, Alert, SafeAreaView } from 'react-native'
 import { Container } from '../styles/FeedStyles'
 import { PostCard } from '../components/PostCard'
 import firebase, { firestore } from 'firebase';
+import SkeletonPlaceholder from "react-native-skeleton-placeholder";
 
 export default function HomeScreen() {
 
@@ -41,7 +42,6 @@ export default function HomeScreen() {
                 })
 
             setPosts(list)
-            setFetch(true)
 
             if (loading) {
                 setLoading(false)
@@ -55,8 +55,7 @@ export default function HomeScreen() {
 
     useEffect(() => {
         fetchPosts();
-        setFetch(false)
-    }, [fetch]);
+    }, []);
 
 
     useEffect(() => {
@@ -133,13 +132,41 @@ export default function HomeScreen() {
             .catch((e) => console.log('Error deleting post.', e));
     };
 
+    const ListHeader = () => {
+        return null;
+    }
+
     return (
-        <FlatList
-            data={posts}
-            renderItem={({ item }) => <PostCard item={item} onDelete={handleDelete} />}
-            keyExtractor={item => item.id}
-            showsVerticalScrollIndicator={false}
-        />
+        <SafeAreaView style={{ flex: 1 }}>
+            {loading ?
+                <SkeletonPlaceholder>
+                    <View style={{ flexDirection: "row", alignItems: "center" }}>
+                        <View style={{ width: 60, height: 60, borderRadius: 50 }} />
+                        <View style={{ marginLeft: 20 }}>
+                            <View style={{ width: 120, height: 20, borderRadius: 4 }} />
+                            <View
+                                style={{ marginTop: 6, width: 80, height: 20, borderRadius: 4 }}
+                            />
+                        </View>
+                    </View>
+                    <View style={{ marginTop: 10, marginBottom: 30 }}>
+                        <View style={{ width: 300, height: 20, borderRadius: 4 }}></View>
+                        <View style={{ marginTop: 6, width: 250, height: 20, borderRadius: 4 }}></View>
+                        <View style={{ marginTop: 6, width: 350, height: 200, borderRadius: 4 }}></View>
+                    </View>
+                </SkeletonPlaceholder>
+                :
+                <FlatList
+                    data={posts}
+                    renderItem={({ item }) => <PostCard item={item} onDelete={handleDelete} />}
+                    keyExtractor={item => item.id}
+                    ListHeaderComponent={ListHeader}
+                    ListFooterComponent={ListHeader}
+                    showsVerticalScrollIndicator={false}
+                />
+            }
+        </SafeAreaView>
+
         // <Container>  
         //  </Container>
     )
