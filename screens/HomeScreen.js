@@ -2,11 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { FlatList, Alert } from 'react-native'
 import { Container } from '../styles/FeedStyles'
 import { PostCard } from '../components/PostCard'
-
 import firebase, { firestore } from 'firebase';
-
-import moment from 'moment'
-
 
 export default function HomeScreen() {
 
