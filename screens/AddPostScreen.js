@@ -135,17 +135,7 @@ export default function AddPostScreen() {
 
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            {uploading ? (
-                <StatusWrapper>
-                    <Text>{transferred} % Completed!</Text>
-                    <ActivityIndicator style={{ marginTop: 10 }} size="large" color="#000ff" />
-                </StatusWrapper>
 
-            ) : (
-                <SubmitButton onPress={submitPost}>
-                    <SubmitButtonText>Post</SubmitButtonText>
-                </SubmitButton>
-            )}
 
             <InputWrapper>
                 {image != null ? <AddImage source={{ uri: image }} /> : null}
@@ -158,6 +148,17 @@ export default function AddPostScreen() {
                 >
                 </InputField>
 
+                {uploading ? (
+                    <StatusWrapper>
+                        <Text>{transferred} % Completed!</Text>
+                        <ActivityIndicator style={{ marginTop: 10 }} size="large" color="#000ff" />
+                    </StatusWrapper>
+
+                ) : (
+                    <SubmitButton onPress={submitPost}>
+                        <SubmitButtonText>Post</SubmitButtonText>
+                    </SubmitButton>
+                )}
 
 
 

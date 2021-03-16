@@ -120,18 +120,20 @@ const MessageStack = ({ navigation }) => (
     <Stack.Navigator>
 
         <Stack.Screen
+            name="Messages"
+            component={MessagesScreen}
+        />
+
+        <Stack.Screen
             name="Chat"
             component={ChatScreen}
             options={({ route }) => ({
-                // title: route.params.userName,
+                title: route.params.userName,
                 headerBackTitleVisible: false,
             })}
         />
 
-        <Stack.Screen
-            name="Messages"
-            component={MessagesScreen}
-        />
+
     </Stack.Navigator>
 );
 
@@ -162,6 +164,18 @@ const ProfileStack = ({ navigation }) => (
 );
 
 export default function AppStack() {
+
+    const getTabBarVisibility = (route) => { //eğer chat ekranında isek tab bar gorunmıcek.
+        const routeName = route.state
+            ? route.state.routes[route.state.index].name
+            : '';
+
+        if (routeName === 'Chat' || routeName === "AddPost") {
+            return false;
+        }
+        return true;
+    };
+
     const [dataLoaded, setDataLoaded] = useState(false)
 
     if (!dataLoaded) {
@@ -174,16 +188,6 @@ export default function AppStack() {
         )
     }
 
-    const getTabBarVisibility = (route) => {
-        const routeName = route.state
-            ? route.state.routes[route.state.index].name
-            : '';
-
-        if (routeName === 'Chat') {
-            return false;
-        }
-        return true;
-    };
 
     return (
         <Tab.Navigator
@@ -195,7 +199,7 @@ export default function AppStack() {
                 component={FeedStack}
                 options={({ route }) => ({
                     tabBarLabel: 'Home',
-                    // tabBarVisible: route.state && route.state.index === 0,
+                    tabBarVisible: route.state && route.state.index === 0, //eğer addpost ekranında isek tab bar gorunmıcek.
                     tabBarIcon: ({ color, size }) => (
                         <MaterialCommunityIcons
                             name="home-outline"
@@ -209,9 +213,7 @@ export default function AppStack() {
                 name="Messages"
                 component={MessageStack}
                 options={({ route }) => ({
-                    // tabBarVisible: getTabBarVisibility(route),
-                    // Or Hide tabbar when push!
-                    // https://github.com/react-navigation/react-navigation/issues/7677
+                    tabBarVisible: getTabBarVisibility(route), //eğer chat ekranında isek tab bar gorunmıcek.
                     // tabBarVisible: route.state && route.state.index === 0,
                     // tabBarLabel: 'Home',
                     tabBarIcon: ({ color, size }) => (
