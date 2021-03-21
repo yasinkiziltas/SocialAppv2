@@ -1,5 +1,5 @@
 import React, { createContext, useState } from 'react'
-import firebase from 'firebase'
+import firebase, { auth, firestore } from 'firebase'
 
 import * as Google from 'expo-google-app-auth';
 import * as Facebook from 'expo-facebook';
@@ -46,7 +46,7 @@ export const AuthProvider = ({ children }) => {
                             setUserId(user.uid);
                             setUserName(user.displayName);
                             setEmail(user.email);
-                            console.log('Log success!')
+                            console.log('Log success: ', userId)
                         }
 
                     }
@@ -119,6 +119,19 @@ export const AuthProvider = ({ children }) => {
                 register: async (email, password) => {
                     try {
                         await firebase.auth().createUserWithEmailAndPassword(email, password)
+                            .then(() => {
+                                firestore().collection('users').doc(auth().currentUser.uid)
+                                    .set({
+                                        fname: '',
+                                        lname: '',
+                                        email: email,
+                                        createdAt: firestore.Timestamp.fromDate(new Date()),
+                                        userImg: null,
+                                    })
+                                    .catch(error => {
+                                        console.log('Something went wrong with added user to firestore: ', error);
+                                    })
+                            })
                     }
                     catch (e) {
                         console.log(e)

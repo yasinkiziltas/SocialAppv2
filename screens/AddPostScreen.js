@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions'
 
-import 'firebase/firestore';
+
 import firebase, { firestore } from 'firebase';
 import { AuthContext } from '../navigation/AuthProvider'
 

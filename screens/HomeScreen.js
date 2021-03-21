@@ -5,7 +5,7 @@ import firebase, { firestore } from 'firebase';
 import SkeletonPlaceholder from "react-native-skeleton-placeholder";
 import { ScrollView } from 'react-native-gesture-handler';
 
-export default function HomeScreen() {
+export default function HomeScreen({ navigation }) {
 
     const [posts, setPosts] = useState(null)
     const [loading, setLoading] = useState(null)
@@ -191,6 +191,7 @@ export default function HomeScreen() {
                         <PostCard
                             item={item}
                             onDelete={handleDelete}
+                            onPress={() => navigation.navigate('HomeProfile', { userId: item.userId })}
                         />
                     )}
                     keyExtractor={(item) => item.id}
